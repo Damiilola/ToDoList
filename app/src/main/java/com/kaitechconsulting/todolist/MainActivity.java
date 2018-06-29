@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AlertDialogFragment.OnDoneButtonTappedListener {
 
     private ArrayList<String> itemsToDo;
     private ArrayAdapter<String> adapter;
@@ -44,8 +44,14 @@ public class MainActivity extends AppCompatActivity {
     private void addItemToListDialog() {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(), "TAG");
-
     }
+
+    @Override
+    public void onTaskEntryComplete(String taskInput) {
+        itemsToDo.add(taskInput);
+    }
+
 
     //if there's an item on the todo list, put a checkbox next to it
 }
+

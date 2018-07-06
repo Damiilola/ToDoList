@@ -36,6 +36,7 @@ public class AlertDialogFragment extends DialogFragment {
 
         AlertDialog.Builder todoTaskBuilder = new AlertDialog.Builder(getActivity());
         final EditText input = new EditText(getActivity());
+//        boolean hasContent = !String.valueOf(input).trim().isEmpty();
 
         todoTaskBuilder.setTitle("Add a new task")
                 .setView(input)
@@ -54,8 +55,6 @@ public class AlertDialogFragment extends DialogFragment {
                 })
                 //when cancel is selected go back to the list view and do nothing
                 .setNegativeButton("Cancel", null);
-
-
 
         return todoTaskBuilder.create();
     }

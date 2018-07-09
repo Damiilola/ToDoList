@@ -58,5 +58,12 @@ public class CustomCheckListAdapter extends ArrayAdapter<String> {
         iconIdArrayList.remove(index);
         this.notifyDataSetChanged();
     }
+
+    public void editListItem(int index, String newInput) {
+        checkListItemsArrayList.set(index, newInput);
+        this.notifyDataSetChanged();
+
+    }
+
 }
 

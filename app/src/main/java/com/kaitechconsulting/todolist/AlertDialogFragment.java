@@ -46,10 +46,12 @@ public class AlertDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         // when done is tapped, save the typed item to the list
                         // hidden text in the edit text space -- describe your task.
+
                         String taskInput = input.getText().toString();
 
                         Log.d(TAG, "Done button clicked");
                         callback.onTaskEntryComplete(taskInput);
+
 
                     }
                 })
@@ -58,5 +60,6 @@ public class AlertDialogFragment extends DialogFragment {
 
         return todoTaskBuilder.create();
     }
+
 
 }

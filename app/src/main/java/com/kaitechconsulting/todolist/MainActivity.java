@@ -1,14 +1,18 @@
 package com.kaitechconsulting.todolist;
 
+import android.app.Dialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 
@@ -20,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements AlertDialogFragme
     private AlertDialogFragment ald;
     private  CheckListItem checkListItem;
     private ContextMenu actionOptionMenu;
-
 
 
     @Override
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements AlertDialogFragme
         listView.setAdapter(adapter);
 
         registerForContextMenu(this.listView);
+
 
         //code for enabling the floatingActionBar
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -68,20 +72,23 @@ public class MainActivity extends AppCompatActivity implements AlertDialogFragme
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int index = info.position;
+       final int index = info.position;
         int chosenMenuItemIndex = item.getOrder();
         switch (chosenMenuItemIndex) {
             //for the edit option
             case 0:
+                updateCheckListItemAfterEdit(index);
+                return true;
 
             //for the delete option
             case 1:
                 removeItemFromCheckListArrayUsingIndex(index);
+                return true;
 
             default:
-
+                return super.onContextItemSelected(item);
         }
-        return true;
+
     }
 
     private void addItemToListDialog() {
@@ -97,6 +104,35 @@ public class MainActivity extends AppCompatActivity implements AlertDialogFragme
 
     public void removeItemFromCheckListArrayUsingIndex(int index) {
         adapter.removeFromList(index);
+    }
+
+    public void modifyCheckListItem (int index, String newInput) {
+        adapter.editListItem(index, newInput);
+    }
+
+
+    public void updateCheckListItemAfterEdit(final int index) {
+
+        final String oldInput = adapter.getItem(index);
+        // open up an edit text dialog with the old text set by default
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.edit_item_dialog);
+        final EditText newlyAddedInput = dialog.findViewById(R.id.editItem);
+        newlyAddedInput.setText(oldInput);
+        // code for the add item button in the edit item dialog
+        final Button addItemButton = dialog.findViewById(R.id.addItemButton);
+        addItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String updatedInput = newlyAddedInput.getText().toString();
+                modifyCheckListItem(index, updatedInput);
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
 }

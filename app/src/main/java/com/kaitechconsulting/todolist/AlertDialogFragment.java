@@ -37,7 +37,7 @@ public class AlertDialogFragment extends DialogFragment {
 
         AlertDialog.Builder todoTaskBuilder = new AlertDialog.Builder(getActivity());
         final EditText input = new EditText(getActivity());
-        
+
             todoTaskBuilder.setTitle("Add a new task")
                     .setView(input)
                     //put an option for ok and cancel in the alert dialog
